@@ -1,6 +1,7 @@
 package com.example.teamcity.api;
 
 import com.example.teamcity.api.rest.enums.Endpoint;
+import com.example.teamcity.api.rest.generators.TestDataGenerator;
 import com.example.teamcity.api.rest.models.User;
 import com.example.teamcity.api.rest.requests.checked.CheckedBase;
 import com.example.teamcity.api.rest.spec.Specifications;
@@ -13,11 +14,9 @@ public class BuildTypeTest extends BaseApiTest {
 
     @Test(description = "User should be able to create build type", groups = {"Positive", "CRUD"})
     public void userCreatesBuildTypeTest() {
+        var user = TestDataGenerator.generate(User.class);
+
         step("Create user", () ->  {
-            var user = User.builder()
-                    .username("name1")
-                    .password("password1")
-                    .build();
             var requester = new CheckedBase<User>(Specifications.superUserAuth(), Endpoint.USERS);
             requester.create(user);
         });
