@@ -1,12 +1,16 @@
 package com.example.teamcity.api;
 
 import com.example.teamcity.api.rest.enums.Endpoint;
-import com.example.teamcity.api.rest.generators.TestDataGenerator;
+import com.example.teamcity.api.rest.models.BuildType;
+import com.example.teamcity.api.rest.models.Project;
 import com.example.teamcity.api.rest.models.User;
 import com.example.teamcity.api.rest.requests.checked.CheckedBase;
 import com.example.teamcity.api.rest.spec.Specifications;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.example.teamcity.api.rest.generators.TestDataGenerator.generate;
 import static io.qameta.allure.Allure.step;
 
 @Test(groups = {"Regression"})
@@ -14,14 +18,27 @@ public class BuildTypeTest extends BaseApiTest {
 
     @Test(description = "User should be able to create build type", groups = {"Positive", "CRUD"})
     public void userCreatesBuildTypeTest() {
-        var user = TestDataGenerator.generate(User.class);
+        var user = generate(User.class);
 
         step("Create user", () ->  {
             var requester = new CheckedBase<User>(Specifications.superUserAuth(), Endpoint.USERS);
             requester.create(user);
         });
 
-        step("Create project by user");
+        var project = generate(Project.class);
+        AtomicReference<String> projectId = new AtomicReference<>("");
+
+        step("Create project by user", () -> {
+            var requester = new CheckedBase<Project>(Specifications.authSpec(user), Endpoint.PROJECTS);
+            projectId.set(requester.create(project).getId());
+        });
+
+        var buildType = generate(BuildType.class);
+        buildType.setProject(Project.builder().id(projectId.get()).locator(null).build());
+
+        var requester = new CheckedBase<BuildType>(Specifications.authSpec(user), Endpoint.BUILD_TYPES);
+        AtomicReference<String> buildTypeId = new AtomicReference<>("");
+
         step("Create buildType for project by user");
         step("Check buildType was created successfully with correct data");
     }

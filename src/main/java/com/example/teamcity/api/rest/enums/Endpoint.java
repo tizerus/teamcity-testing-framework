@@ -11,8 +11,8 @@ import lombok.Getter;
 @Getter
 public enum Endpoint {
 
-    BUILD_TYPE("app/rest/buildTypes", BuildType .class),
-    PROJECT("/app/rest/projects", Project.class),
+    BUILD_TYPES("app/rest/buildTypes", BuildType .class),
+    PROJECTS("/app/rest/projects", Project.class),
     USERS("/app/rest/users", User.class);
 
     private final String url;

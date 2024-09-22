@@ -6,16 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Step extends BaseModel {
+public class Roles extends BaseModel {
 
-    private String id;
-    private String name;
-    @Builder.Default
-    private String type = "simpleRunner";
-
+    private List<Role> role;
+    
 }
