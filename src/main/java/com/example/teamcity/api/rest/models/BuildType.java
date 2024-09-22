@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseModel {
+public class BuildType extends BaseModel {
 
-    private String username;
-    private String password;
+    private String id;
+    private String name;
+    private Project project;
+    private Steps steps;
 
 }
-
-
