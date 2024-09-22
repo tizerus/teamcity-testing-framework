@@ -21,7 +21,7 @@ public class BuildTypeTest extends BaseApiTest {
         var user = generate(User.class);
 
         step("Create user", () ->  {
-            var requester = new CheckedBase<User>(Specifications.superUserAuth(), Endpoint.USERS);
+            var requester = new CheckedBase<User>(Specifications.superUserSpec(), Endpoint.USERS);
             requester.create(user);
         });
 
@@ -39,8 +39,15 @@ public class BuildTypeTest extends BaseApiTest {
         var requester = new CheckedBase<BuildType>(Specifications.authSpec(user), Endpoint.BUILD_TYPES);
         AtomicReference<String> buildTypeId = new AtomicReference<>("");
 
-        step("Create buildType for project by user");
-        step("Check buildType was created successfully with correct data");
+        step("Create buildType for project by user", () -> {
+            buildTypeId.set(requester.create(buildType).getId());
+        });
+
+        step("Check buildType was created successfully with correct data", () ->  {
+            var createdBuildType = requester.read(buildTypeId.get());
+
+            softAssert.assertEquals(buildType.getName(), createdBuildType.getName(), "Build type name is not correct");
+        });
     }
 
     @Test(description = "User should not be able to create two build types with the same id", groups = {"Negative", "CRUD"})
