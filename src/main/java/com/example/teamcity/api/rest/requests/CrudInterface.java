@@ -5,8 +5,8 @@ import com.example.teamcity.api.rest.models.BaseModel;
 public interface CrudInterface {
 
     Object create(BaseModel baseModel);
-    Object read(BaseModel baseModel);
-    Object update(BaseModel baseModel);
-    Object delete(BaseModel baseModel);
+    Object read(String id);
+    Object update(String id, BaseModel baseModel);
+    Object delete(String id);
 
 }
