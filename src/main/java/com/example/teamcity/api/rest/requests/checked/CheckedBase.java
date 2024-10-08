@@ -9,6 +9,8 @@ import com.example.teamcity.api.rest.requests.unchecked.UncheckedBase;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
+import java.util.List;
+
 @SuppressWarnings("unchecked")
 public final class CheckedBase<T extends BaseModel> extends Request implements CrudInterface {
 

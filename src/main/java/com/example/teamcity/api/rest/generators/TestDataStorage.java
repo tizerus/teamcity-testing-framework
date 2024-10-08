@@ -5,8 +5,11 @@ import com.example.teamcity.api.rest.models.BaseModel;
 import com.example.teamcity.api.rest.requests.unchecked.UncheckedBase;
 import com.example.teamcity.api.rest.spec.Specifications;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,7 +31,7 @@ public class TestDataStorage {
 
     private void addCreatedEntity(Endpoint endpoint, String id) {
         if (id != null) {
-            createdEntitiesMap.computeIfAbsent(endpoint, key -> new HashSet<>()).add(id);
+            createdEntitiesMap.computeIfAbsent(endpoint, key -> new LinkedHashSet<>()).add(id);
         }
     }
 
@@ -57,14 +60,16 @@ public class TestDataStorage {
     }
 
     public void deleteCreatedEntities() {
-        createdEntitiesMap.forEach(((endpoint, ids) ->
-                                            ids.forEach(id ->
-                                                            new UncheckedBase(Specifications.superUserSpec(),
-                                                                    endpoint).delete(id)
-                                                       )
-                )
+        List<Endpoint> reverseOrderEndpoints = new ArrayList<>(createdEntitiesMap.keySet());
+        Collections.reverse(reverseOrderEndpoints);
 
-                                  );
+        reverseOrderEndpoints.forEach(endpoint -> {
+            LinkedHashSet<String> ids = (LinkedHashSet<String>) createdEntitiesMap.get(endpoint);
+            List<String> reverseOrderIds = new ArrayList<>(ids);
+            Collections.reverse(reverseOrderIds);
+
+            reverseOrderIds.forEach(id -> new UncheckedBase(Specifications.superUserSpec(), endpoint).delete(id));
+        });
 
         createdEntitiesMap.clear();
     }

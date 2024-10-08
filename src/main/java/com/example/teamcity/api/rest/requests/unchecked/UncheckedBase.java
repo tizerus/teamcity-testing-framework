@@ -8,6 +8,8 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import java.util.List;
+
 public class UncheckedBase extends Request implements CrudInterface {
 
     public UncheckedBase(RequestSpecification spec, Endpoint endpoint) {
@@ -25,18 +27,26 @@ public class UncheckedBase extends Request implements CrudInterface {
 
     @Override
     public Response read(String id) {
-        return RestAssured
-                .given()
-                .spec(spec)
-                .get(endpoint.getUrl() + "/id:" + id);
+        if (id != null) {
+            return RestAssured
+                    .given()
+                    .spec(spec)
+                    .get(endpoint.getUrl() + "/id:" + id);
+        } else {
+            return RestAssured
+                    .given()
+                    .spec(spec)
+                    .get(endpoint.getUrl());
+        }
     }
 
     @Override
     public Response update(String id, BaseModel model) {
+        String endpointUrl = endpoint.getUrl().replace("{id}", id);
         return RestAssured
                 .given()
-                .body(model)
                 .spec(spec)
+                .body(model)
                 .put(endpoint.getUrl() + "/id:" + id);
     }
 

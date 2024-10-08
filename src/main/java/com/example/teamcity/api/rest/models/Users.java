@@ -1,24 +1,23 @@
 package com.example.teamcity.api.rest.models;
 
-import com.example.teamcity.api.rest.annotations.Random;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Project extends BaseModel {
+public class Users extends BaseModel {
 
-    @Random
-    private String id;
-    @Random
-    private String name;
-    private String locator;
-    private boolean copyAllAssociatedSettings;
+    @JsonProperty("user")
+    private List<User> users;
+    private long count;
 
 }
