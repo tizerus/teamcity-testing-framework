@@ -1,4 +1,4 @@
-package com.example.teamcity.api;
+package com.example.teamcity;
 
 import com.example.teamcity.api.rest.generators.TestDataStorage;
 import com.example.teamcity.api.rest.models.TestData;

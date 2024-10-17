@@ -68,7 +68,7 @@ public class TestDataStorage {
             List<String> reverseOrderIds = new ArrayList<>(ids);
             Collections.reverse(reverseOrderIds);
 
-            reverseOrderIds.forEach(id -> new UncheckedBase(Specifications.superUserSpec(), endpoint).delete(id));
+            reverseOrderIds.forEach(id -> new UncheckedBase(Specifications.superUserSpec(), endpoint).delete("id:" + id));
         });
 
         createdEntitiesMap.clear();

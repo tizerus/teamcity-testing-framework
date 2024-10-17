@@ -20,6 +20,8 @@
         <allure.version>2.29.0</allure.version>
         <apache.common.text.version>1.12.0</apache.common.text.version>
         <assertj.version>3.26.3</assertj.version>
+        <selenide.version>7.4.3</selenide.version>
+        <awaitility.version>4.2.0</awaitility.version>
     </properties>
 
     <dependencies>
@@ -79,7 +81,16 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>selenide</artifactId>
+            <version>${selenide.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
         </dependency>
 
 

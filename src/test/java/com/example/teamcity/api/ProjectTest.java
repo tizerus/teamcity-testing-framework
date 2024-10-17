@@ -30,21 +30,21 @@ public class ProjectTest extends BaseApiTest {
         var updatedProject = generate(Project.class);
         new UncheckedRequests(Specifications.superUserSpec())
                 .getRequest(PROJECTS)
-                .update(expectedProject.getId(), updatedProject)
+                .update("id:" + expectedProject.getId(), updatedProject)
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
         step("Delete project");
         new UncheckedRequests(Specifications.superUserSpec())
                 .getRequest(PROJECTS)
-                .delete(currentProject.getId())
+                .delete("id:" + currentProject.getId())
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NO_CONTENT);
         step("Check that there is no project with deleted id");
         new UncheckedRequests(Specifications.superUserSpec())
                 .getRequest(PROJECTS)
-                .read(currentProject.getId())
+                .read("id:" + currentProject.getId())
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
@@ -70,7 +70,7 @@ public class ProjectTest extends BaseApiTest {
     public void deleteNotExistingProject() {
         new UncheckedRequests(Specifications.superUserSpec())
                 .getRequest(PROJECTS)
-                .delete(testData.getProject().getId())
+                .delete("id:" + testData.getProject().getId())
                 .then()
                 .statusCode(HttpStatus.SC_NOT_FOUND)
                 .body(Matchers.containsString(("Project cannot be found by external id '%s'.\n"

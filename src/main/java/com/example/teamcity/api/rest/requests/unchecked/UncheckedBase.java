@@ -26,12 +26,12 @@ public class UncheckedBase extends Request implements CrudInterface {
     }
 
     @Override
-    public Response read(String id) {
-        if (id != null) {
+    public Response read(String locator) {
+        if (locator != null) {
             return RestAssured
                     .given()
                     .spec(spec)
-                    .get(endpoint.getUrl() + "/id:" + id);
+                    .get(endpoint.getUrl() + "/" + locator);
         } else {
             return RestAssured
                     .given()
@@ -41,21 +41,20 @@ public class UncheckedBase extends Request implements CrudInterface {
     }
 
     @Override
-    public Response update(String id, BaseModel model) {
-        String endpointUrl = endpoint.getUrl().replace("{id}", id);
+    public Response update(String locator, BaseModel model) {
         return RestAssured
                 .given()
                 .spec(spec)
                 .body(model)
-                .put(endpoint.getUrl() + "/id:" + id);
+                .put(endpoint.getUrl() + "/" + locator);
     }
 
     @Override
-    public Response delete(String id) {
+    public Response delete(String locator) {
         return RestAssured
                 .given()
                 .spec(spec)
-                .delete(endpoint.getUrl() + "/id:" + id);
+                .delete(endpoint.getUrl() + "/" + locator);
     }
 
 }

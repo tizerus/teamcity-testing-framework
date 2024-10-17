@@ -1,5 +1,6 @@
 package com.example.teamcity.api;
 
+import com.example.teamcity.BaseTest;
 import com.example.teamcity.api.rest.enums.UserRoles;
 import com.example.teamcity.api.rest.generators.DataGenerator;
 import com.example.teamcity.api.rest.models.Role;
