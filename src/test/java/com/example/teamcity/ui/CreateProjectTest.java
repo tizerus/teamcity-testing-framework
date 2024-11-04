@@ -16,7 +16,6 @@ import static com.example.teamcity.ui.pages.admin.CreateProjectPage.PROJECT_NAME
 @Test(groups = {"Regression"})
 public class CreateProjectTest extends BaseUiTest {
 
-    private static final String REPO_URL = "https://github.com/AlexPshe/spring-core-for-qa";
     private static final String PROJECT_NAME_MUST_NOT_BE_EMPTY = "Project name must not be empty";
 
     @Test(description = "User should be able to create project", groups = {"Positive"})
