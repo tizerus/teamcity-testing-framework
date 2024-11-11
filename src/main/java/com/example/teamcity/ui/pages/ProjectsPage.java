@@ -4,8 +4,10 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.example.teamcity.api.rest.models.Project;
 import com.example.teamcity.ui.elements.ProjectElement;
 
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -28,6 +30,16 @@ public class ProjectsPage extends BasePage {
 
     public List<ProjectElement> getProjects() {
         return generatePageElements(projectElements, ProjectElement::new);
+    }
+
+    public ProjectPage editProject(Project project) throws NoSuchObjectException {
+        getProjects().stream()
+                .filter(p -> p.getName().getText().equals(project.getName()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchObjectException("Cannot find project name: %s".formatted(project.getName())))
+                .getLink()
+                .click();
+        return Selenide.page(ProjectPage.class);
     }
 
 }

@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class BaseUiTest extends BaseTest {
 
+    protected static final String REPO_URL = "https://github.com/AlexPshe/spring-core-for-qa";
+
     @BeforeSuite(alwaysRun = true)
     public void setupUiTest() {
         Configuration.browser = Config.getProperty("browser");

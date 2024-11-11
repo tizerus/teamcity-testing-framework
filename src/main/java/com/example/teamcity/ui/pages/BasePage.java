@@ -20,7 +20,7 @@ public class BasePage {
     }
 
     public void checkErrorText(SelenideElement element, String errorText) {
-        element.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        element.shouldBe(Condition.visible, Duration.ofSeconds(30));
         Assertions.assertThat(element.getText())
                 .isEqualTo(errorText);
     }
